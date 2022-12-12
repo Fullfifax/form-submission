@@ -15,7 +15,7 @@
         <label>Skills (press Enter to add new skill)</label>
         <input type="text" v-model="tempSkill" @keyup="addSkill">
         <div class="pill">
-            <p v-for="skill in skills" :key="skills">{{ skill }}</p>
+            <p v-for="skill in skills" :key="skills" @click="deleteSkill(skill)">{{ skill }}</p>
         </div>
 
         <div class="terms">
@@ -65,13 +65,18 @@ export default {
         }
     },
     methods: {
-        addSkill(e) {top
+        addSkill(e) {
             if(e.key === 'Enter' && this.tempSkill) {
                 if(!this.skills.includes(this.tempSkill)) {
                     this.skills.push(this.tempSkill)
                 } 
                 this.tempSkill = ''
             }
+        },
+        deleteSkill(skill) {
+            this.skills = this.skills.filter((item) => {
+                return skill !== item
+            })
         }
     }
 }
@@ -110,10 +115,15 @@ export default {
     }
     .pill {
         display: flex;
+        flex-wrap: wrap;
     }
     .pill p {
-        color: white;
-        font-size: 1.2em;
+        background-color: white;
+        border-radius: 20px;
+        color: #81dd75;
+        font-size: 1em;
+        font-weight: bold;
         margin: 1em 1em 0 0;
+        padding: 8px 16px;
     }
 </style>
